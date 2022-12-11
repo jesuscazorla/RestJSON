@@ -31,10 +31,7 @@ struct ContentView: View {
                     if let data = data{
                         do{
                           tasks = try decoder.decode(Post.self, from: data)
-                            print(tasks)
-                            
-
-                            
+                                                                    
                     }catch{
                             print(error)
                         }
@@ -43,16 +40,15 @@ struct ContentView: View {
                 task.resume()
                 
             }
+            
             if(mostrar_info){
             Text("ID: \(tasks.id)")
                 Text("Nombre: \(tasks.name)")
             Text("Peso: \(tasks.weight/10) kilos")
             var aux = Double(tasks.height)/10
             Text("Altura: \(String(format: "%.2f", aux)) metros")
-            construirArray(aux: tasks.types)
-            ForEach(0 ..< tipos.count){ value in
-                Text("Tipo: \(tipos[value])")
-                }
+              //  Text("Types: \(tasks.types)")
+            
                 
             
         }
@@ -65,7 +61,7 @@ struct ContentView: View {
     
     func construirArray(aux : [Types]) -> some View{
         for p in aux {
-            tipos.append(p.type.name)
+            self.tipos.append(p.type.name)
         }
         return Text("")
         
