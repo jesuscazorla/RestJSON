@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-
 struct ContentView: View {
     @State var nombre: String = ""
     @State var navigation = false
@@ -18,7 +17,7 @@ struct ContentView: View {
         VStack{
             HStack{
                                        
-            TextField("Buscar...", text: $nombre)
+                TextField("Buscar...", text: $nombre)
                     .padding()
                     .frame(width: 250, height: 30, alignment: .center)
                     .background(.gray.opacity(0.3))
@@ -40,7 +39,7 @@ struct ContentView: View {
             } .background(
                 Group {
                     NavigationLink(
-                        destination: VistaPokemon(nombre: nombre),
+                        destination: VistaPokemon(nombre:nombre.lowercased()),
                     isActive: $navigation,
                     label: {
                         EmptyView()
@@ -58,11 +57,7 @@ struct ContentView: View {
         }
             
             
-          
-            
-                
-                
-            }
+        }
         .navigationTitle("Pokédex")
         .navigationBarTitleDisplayMode(.inline)
         }
@@ -105,7 +100,6 @@ struct FilaPokemon: View {
             
     
         }.frame(width: 200, height: 100, alignment: .leading)
-            
         .onAppear {
             let random = Int64.random(in: 1...800)
             let url = URL(string: "https://pokeapi.co/api/v2/pokemon/\(random)")
@@ -134,7 +128,7 @@ struct FilaPokemon: View {
         .background(
         Group {
             NavigationLink(
-                destination: VistaPokemon(nombre: "", post: aux),
+                destination: VistaPokemon(id: aux.id),
             isActive: $navigation2,
             label: {
                 EmptyView()

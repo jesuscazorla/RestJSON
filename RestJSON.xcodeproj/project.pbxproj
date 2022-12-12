@@ -12,7 +12,7 @@
 		297864C82945EAD600FDD2AD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 297864C72945EAD600FDD2AD /* Assets.xcassets */; };
 		297864CB2945EAD600FDD2AD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 297864CA2945EAD600FDD2AD /* Preview Assets.xcassets */; };
 		297864D22945EB2B00FDD2AD /* Elemento.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297864D12945EB2B00FDD2AD /* Elemento.swift */; };
-		297864D629464FD100FDD2AD /* VistaPokemon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297864D529464FD100FDD2AD /* VistaPokemon.swift */; };
+		29B719C72946B1E200C1AA70 /* VistaPokemon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B719C62946B1E200C1AA70 /* VistaPokemon.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,7 +22,7 @@
 		297864C72945EAD600FDD2AD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		297864CA2945EAD600FDD2AD /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		297864D12945EB2B00FDD2AD /* Elemento.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Elemento.swift; sourceTree = "<group>"; };
-		297864D529464FD100FDD2AD /* VistaPokemon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VistaPokemon.swift; sourceTree = "<group>"; };
+		29B719C62946B1E200C1AA70 /* VistaPokemon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VistaPokemon.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,12 +55,12 @@
 		297864C22945EAD400FDD2AD /* RestJSON */ = {
 			isa = PBXGroup;
 			children = (
+				29B719C62946B1E200C1AA70 /* VistaPokemon.swift */,
 				297864C32945EAD400FDD2AD /* RestJSONApp.swift */,
 				297864C52945EAD400FDD2AD /* ContentView.swift */,
 				297864D12945EB2B00FDD2AD /* Elemento.swift */,
 				297864C72945EAD600FDD2AD /* Assets.xcassets */,
 				297864C92945EAD600FDD2AD /* Preview Content */,
-				297864D529464FD100FDD2AD /* VistaPokemon.swift */,
 			);
 			path = RestJSON;
 			sourceTree = "<group>";
@@ -144,8 +144,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				297864C62945EAD400FDD2AD /* ContentView.swift in Sources */,
+				29B719C72946B1E200C1AA70 /* VistaPokemon.swift in Sources */,
 				297864C42945EAD400FDD2AD /* RestJSONApp.swift in Sources */,
-				297864D629464FD100FDD2AD /* VistaPokemon.swift in Sources */,
 				297864D22945EB2B00FDD2AD /* Elemento.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
