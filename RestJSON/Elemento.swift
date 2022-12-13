@@ -32,3 +32,4 @@ struct PokemonSprites: Codable{
     let front_default: String
 }
 
+

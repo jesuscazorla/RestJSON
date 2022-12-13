@@ -12,15 +12,18 @@ struct ContentView: View {
     var values = 0..<5
     @State var navigation2 = false
     var body: some View {
-    
         NavigationView{
-        VStack{
+            ZStack{
+                VStack{
+                    Spacer().frame(height: 40)
+                    Image("fondopokedex").resizable()
+                }.ignoresSafeArea()
+            VStack{
             HStack{
-                                       
                 TextField("Buscar...", text: $nombre)
                     .padding()
                     .frame(width: 250, height: 30, alignment: .center)
-                    .background(.gray.opacity(0.3))
+                    .background(.gray.opacity(0.7))
                     .clipShape(RoundedRectangle(cornerRadius:25))
                 HStack{
                     Button(){
@@ -28,18 +31,16 @@ struct ContentView: View {
                         
                     }label: {
                         Image(systemName: "magnifyingglass.circle")
-                            .opacity(nombre.isEmpty ? 0.3 : 0.5)
-                            .foregroundColor(Color.gray).imageScale(Image.Scale.large).frame(width: 50)
+                            .opacity(nombre.isEmpty ? 0.3 : 0.7)
+                            .foregroundColor(Color.black).imageScale(Image.Scale.large).frame(width: 50)
                             .frame(height: 40)
                         
                     }
-                    
                 }
-                
-            } .background(
+            }.background(
                 Group {
                     NavigationLink(
-                        destination: VistaPokemon(nombre:nombre.lowercased()),
+                        destination: VistaPokemon(nombre:nombre.lowercased()).navigationBarBackButtonHidden(true),
                     isActive: $navigation,
                     label: {
                         EmptyView()
@@ -48,21 +49,16 @@ struct ContentView: View {
                 }
                     .hidden()
             )
-    
-        
-        .offset(y: -50)
-        
-        ForEach(values){_ in
-            FilaPokemon(navigation2: navigation2)
+                ForEach(values){_ in
+                    FilaPokemon(navigation2: navigation2)
+                        Spacer().frame(height: 25)
+                }
+            }.frame(alignment: .leading)
+            }
+            .navigationTitle("Pokédex")
+            .navigationBarTitleDisplayMode(.inline)
         }
-            
-            
-        }
-        .navigationTitle("Pokédex")
-        .navigationBarTitleDisplayMode(.inline)
-        }
-        
-        }
+    }
      /*
       mostrar_info = true
     
@@ -89,17 +85,17 @@ struct FilaPokemon: View {
         VStack{
             HStack{
                 Text("\(aux.id)").bold()
-                AsyncImage(url: URL(string: aux.sprites.front_default.lowercased()))
+                    .foregroundColor(Color.green)
+                VStack{
+                    AsyncImage(url: URL(string: aux.sprites.front_default.lowercased()))
+                    Spacer().frame( height: 5)
+                    Text("\(aux.name.capitalized)")
+                        .foregroundColor(Color.accentColor)
+                        .background(Color.red .opacity(0.5))
+                }
             }
-            
-            Spacer().frame( height: 5)
-            
-            Text("\(aux.name.capitalized)")
-           
-            Spacer().frame(height: 10)
-            
-    
-        }.frame(width: 200, height: 100, alignment: .leading)
+        }
+        .frame(width: 200, height: 100, alignment: .leading)
         .onAppear {
             let random = Int64.random(in: 1...800)
             let url = URL(string: "https://pokeapi.co/api/v2/pokemon/\(random)")
@@ -128,7 +124,7 @@ struct FilaPokemon: View {
         .background(
         Group {
             NavigationLink(
-                destination: VistaPokemon(id: aux.id),
+                destination: VistaPokemon(id: aux.id).navigationBarBackButtonHidden(true),
             isActive: $navigation2,
             label: {
                 EmptyView()
