@@ -11,45 +11,64 @@ import Foundation
 struct VistaPokemon: View {
     var id: Int = 0
     var nombre: String = ""
-    @State var aux: Post = Post(id: 0, name: "", height: 0, weight: 0, types: [Types(type: Type(name: ""))], sprites: PokemonSprites(front_default: ""))
+    @State var aux: Post = Post(id: 0, name: "", height: 0, weight: 0, types: [Types(type: Type(name: ""))], sprites: PokemonSprites(front_default: "") )
+    @Binding var nav: Bool
     var body: some View{
         ZStack{
             VStack{
-                Spacer().frame(height: 40)
-            Image("fondopokemon").resizable()
+                Image("fondopokemon")
             }.ignoresSafeArea()
+          
             VStack{
             if(aux.name != ""){
-            HStack{
-                Text("\(aux.id)").bold()
+                Text("\(aux.id)").font(.title).bold()
+                HStack{
                 VStack{
                     AsyncImage(url: URL(string: aux.sprites.front_default.lowercased()))
-                    Spacer().frame( height: 5)
+                    Spacer().frame( height: 10)
                     let nom = aux.name.uppercased()
                     Text("\(nom.capitalized)")
-                        .bold()
+                        .bold().font(.title2)
                 }
             }
             Spacer().frame(height: 20)
             HStack{
-                Text("Tipos:").bold()
                 ForEach(0..<aux.types.count, id: \.self){ tip in
                     FilaTipo(tipo: aux.types[tip].type.name)
                 }
             }
             HStack{
-                Text("Altura:").bold()
-                Text("\(aux.height)")
+                var altura = Double(aux.height)
+                Text("Altura: \(String(format: "%.2f", (altura/10))) metros").bold()
+            
             }
             HStack{
-                Text("Peso:").bold()
-                Text("\(aux.weight)")
+                var peso = Double(aux.weight)
+                Text("Peso: \(String(format: "%.2f", (peso/10))) kg").bold()
+               
             }
+                Image("botonExit")
+                    .resizable()
+                    .frame(width: 40, height: 80)
+                .onTapGesture {
+                    nav.toggle()
+                }
+                .offset(x: -165, y: -150)
             
             }
             else{
-                Text("POKEMON NO EXISTENTE").foregroundColor(Color.red)
+                Text("POKEMON NO EXISTENTE").foregroundColor(Color.black)
+                Image("botonExit")
+                    .resizable()
+                    .frame(width: 40, height: 80)
+                .onTapGesture {
+                    nav.toggle()
+                }
+                .offset(x: -165, y: -10)
+                
             }
+               
+             
         }
             .onAppear {
             if(id != 0){
@@ -64,6 +83,7 @@ struct VistaPokemon: View {
                     do{
                         let tasks = try decoder.decode(Post.self, from: data)
                         aux = tasks
+                      
                         
                     }catch{
                         print(error)
@@ -93,6 +113,7 @@ struct VistaPokemon: View {
                 task.resume()
             }
         }
+            .ignoresSafeArea()
         }
     }
 }
@@ -101,41 +122,41 @@ struct FilaTipo: View {
     var body: some View{
         switch tipo{
             case "normal":
-            Text("NORMAL").background(Color.gray)
+            Image("acero").resizable().frame(width: 70, height: 30, alignment: .center)
             case "fighting":
-                Text("LUCHA").background(Color.brown)
+            Image("lucha").resizable().frame(width: 70, height: 30, alignment: .center)
             case "flying":
-                Text("VOLADOR").background(Color.teal)
+            Image("volador").resizable().frame(width: 70, height: 30, alignment: .center)
             case "poison":
-                Text("VENENO").background(Color.indigo)
+            Image("veneno").resizable().frame(width: 70, height: 30, alignment: .center)
             case "ground":
-                Text("TIERRA").background(Color.yellow)
+            Image("tierra").resizable().frame(width: 70, height: 30, alignment: .center)
             case "rock":
-                Text("ROCA").background(Color.brown)
+            Image("roca").resizable().frame(width: 70, height: 30, alignment: .center)
             case "bug":
-                Text("BICHO").background(Color.mint)
+            Image("bicho").resizable().frame(width: 70, height: 30, alignment: .center)
             case "ghost":
-                Text("FANTASMA").background(Color.purple)
+            Image("fantasma").resizable().frame(width: 70, height: 30, alignment: .center)
             case "steel":
-                Text("ACERO").background(Color.gray)
+            Image("acero").resizable().frame(width: 70, height: 30, alignment: .center)
             case "fire":
-                Text("FUEGO").background(Color.red)
+            Image("fuego").resizable().frame(width: 70, height: 30, alignment: .center)
             case "water":
-                Text("AGUA").background(Color.blue)
+            Image("agua").resizable().frame(width: 70, height: 30, alignment: .center)
             case "grass":
-                Text("PLANTA").background(Color.green)
+            Image("planta").resizable().frame(width: 70, height: 30, alignment: .center)
             case "electric":
-                Text("ELÉCTRICO").background(Color.yellow)
+            Image("electrico").resizable().frame(width: 70, height: 30, alignment: .center)
             case "psychic":
-                Text("PSÍQUICO").background(Color.pink)
+            Image("psiquico").resizable().frame(width: 70, height: 30, alignment: .center)
             case "ice":
-                Text("HIELO").background(Color.cyan)
+            Image("hielo").resizable().frame(width: 70, height: 30, alignment: .center)
             case "dragon":
-                Text("DRAGÓN").background(Color.purple)
+            Image("dragon").resizable().frame(width: 70, height: 30, alignment: .center)
             case "dark":
-                Text("SINIESTRO").background(Color.black).foregroundColor(Color.white)
+            Image("siniestro").resizable().frame(width: 70, height: 30, alignment: .center)
             case "fairy":
-                Text("HADA").background(Color.pink)
+            Image("hada").resizable().frame(width: 70, height: 30, alignment: .center)
             default:
                 Text("TIPO NO DETERMINADO").bold()
         }

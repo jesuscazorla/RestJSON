@@ -14,6 +14,7 @@ struct Post: Codable {
     let weight: Int
     let types: [Types]
     let sprites: PokemonSprites
+    //let stats: [Dictionary<, Any>]
 }
 
 struct Generacion: Codable{
@@ -31,5 +32,12 @@ struct Type : Codable{
 struct PokemonSprites: Codable{
     let front_default: String
 }
+/*
+struct Stat: Codable{
+    let name: String
+}
+ */
+
+
 
 
