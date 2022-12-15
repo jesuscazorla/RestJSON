@@ -11,7 +11,7 @@ import Foundation
 struct VistaPokemon: View {
     var id: Int = 0
     var nombre: String = ""
-    @State var aux: Post = Post(id: 0, name: "", height: 0, weight: 0, types: [Types(type: Type(name: ""))], sprites: PokemonSprites(front_default: "") )
+    @State var aux: Post = Post(id: 0, name: "", height: 0, weight: 0, types: [Types(type: Type(name: ""))], sprites: PokemonSprites(front_default: ""), stats: [Stats(base_stat: 0, stat: Stat(name: ""))])
     @Binding var nav: Bool
     var body: some View{
         ZStack{
@@ -28,7 +28,7 @@ struct VistaPokemon: View {
                     Spacer().frame( height: 10)
                     let nom = aux.name.uppercased()
                     Text("\(nom.capitalized)")
-                        .bold().font(.title2)
+                        .bold().font(.title)
                 }
             }
             Spacer().frame(height: 20)
@@ -36,7 +36,7 @@ struct VistaPokemon: View {
                 ForEach(0..<aux.types.count, id: \.self){ tip in
                     FilaTipo(tipo: aux.types[tip].type.name)
                 }
-            }
+            }.padding(.bottom, 20)
             HStack{
                 var altura = Double(aux.height)
                 Text("Altura: \(String(format: "%.2f", (altura/10))) metros").bold()
@@ -47,17 +47,41 @@ struct VistaPokemon: View {
                 Text("Peso: \(String(format: "%.2f", (peso/10))) kg").bold()
                
             }
+                Spacer().frame(height: 20)
+                Text("Estadísticas base: ").bold().padding(.bottom, 20)
+                ForEach(0..<aux.stats.count, id: \.self){ st in
+                    HStack{
+                        switch aux.stats[st].stat.name{
+                            case "hp":
+                            Text("Puntos de salud:").foregroundColor(Color.green)
+                            case "attack":
+                                Text("Ataque:").foregroundColor(Color.red)
+                            case "defense":
+                                Text("Defensa:").foregroundColor(Color.blue)
+                            case "special-attack":
+                                Text("Ataque especial:").foregroundColor(Color.pink)
+                            case "special-defense":
+                                Text("Defensa especial:").foregroundColor(Color.cyan)
+                            case "speed":
+                            Text("Velocidad:").foregroundColor(Color.yellow)
+                            default:
+                                Text("Stat no registrada:")
+                        }
+                        Text("\(aux.stats[st].base_stat)").foregroundColor(Color.white)
+                    }.frame(width: 200, height: 29)
+                    .background(Color.black).clipShape(RoundedRectangle(cornerRadius: 10))
+                    Spacer().frame(height: 5)
+                }
                 Image("botonExit")
                     .resizable()
                     .frame(width: 40, height: 80)
                 .onTapGesture {
                     nav.toggle()
                 }
-                .offset(x: -165, y: -150)
-            
+                .offset(x: -165, y: -300)
             }
             else{
-                Text("POKEMON NO EXISTENTE").foregroundColor(Color.black)
+                Text("POKEMON NO EXISTENTE").foregroundColor(Color.black).bold()
                 Image("botonExit")
                     .resizable()
                     .frame(width: 40, height: 80)
@@ -67,9 +91,7 @@ struct VistaPokemon: View {
                 .offset(x: -165, y: -10)
                 
             }
-               
-             
-        }
+            }.frame(alignment: .center)
             .onAppear {
             if(id != 0){
             let url = URL(string: "https://pokeapi.co/api/v2/pokemon/\(id)")

@@ -56,11 +56,13 @@ struct ContentView: View {
                 ForEach(filas){__ in
                     HStack{
                         ForEach(columnas){_ in
+                            VStack{
                             FilaPokemon(navigation2: navigation2)
-                    }
-                        
-                    }.frame(width: 300, height: 150, alignment: .center)
-            }
+                            }
+                        }
+                    }.frame(width: 190, alignment: .center)
+                        .offset(y: 60)
+                }
                 }
                 .navigationBarItems(trailing: Text("Pokédex").bold().font(.title))
                 
@@ -74,52 +76,46 @@ struct ContentView: View {
 
 
 struct FilaPokemon: View {
-    @State var aux: Post = Post(id: 0, name: "", height: 0, weight: 0, types: [Types(type: Type(name: ""))], sprites: PokemonSprites(front_default: ""))
+    @State var aux: Post = Post(id: 0, name: "", height: 0, weight: 0, types: [Types(type: Type(name: ""))], sprites: PokemonSprites(front_default: ""), stats: [Stats(base_stat: 0, stat: Stat(name: ""))])
     @State var navigation2: Bool
     var body: some View{
-        VStack{
-            HStack{
-                Text("\(aux.id)").bold()
-                    .foregroundColor(Color.black)
+
                 VStack{
-                    AsyncImage(url: URL(string: aux.sprites.front_default.lowercased()))
-                    Spacer().frame( height: 5)
+                    AsyncImage(url: URL(string: aux.sprites.front_default.lowercased())).padding(.top, -10)
                     Text("\(aux.name.capitalized)")
-                        .foregroundColor(Color.black).bold().font(.headline)
+                        .foregroundColor(Color.black).bold().font(.title3).multilineTextAlignment(.center)
+                    HStack{
+                        ForEach(0..<aux.types.count, id: \.self){ tip in
+                            FilaTipo(tipo: aux.types[tip].type.name)
+                        }
+                    }.offset(y: -10)
+                }.frame(width: 190)
+                    .onAppear {
+                    let random = Int64.random(in: 1...800)
+                    let url = URL(string: "https://pokeapi.co/api/v2/pokemon/\(random)")
+                    let task = URLSession.shared.dataTask(with: url!){
+                    data, response, error in
                 
-                }
-            }
-        }
-        .frame(width: 200, height: 100)
-        .offset(y: 20)
-      
-   
-        .onAppear {
-            let random = Int64.random(in: 1...800)
-            let url = URL(string: "https://pokeapi.co/api/v2/pokemon/\(random)")
-            let task = URLSession.shared.dataTask(with: url!){
-                data, response, error in
-                
-                let decoder = JSONDecoder()
+                        let decoder = JSONDecoder()
                 
 
-                if let data = data{
-                    do{
-                        let tasks = try decoder.decode(Post.self, from: data)
-                        aux = tasks
+                        if let data = data{
+                            do{
+                                let tasks = try decoder.decode(Post.self, from: data)
+                                aux = tasks
                         
-                    }catch{
-                        print(error)
+                            }catch{
+                                print(error)
+                            }
+                        }
                     }
-                }
-            }
-            task.resume()
+                    task.resume()
                
-        }
-        .onTapGesture {
-            navigation2.toggle()
-        }
-        .background(
+                }
+                .onTapGesture {
+                    navigation2.toggle()
+                }
+                .background(
         Group {
             NavigationLink(
                 destination: VistaPokemon(id: aux.id, nav: $navigation2).navigationBarBackButtonHidden(true),
@@ -131,7 +127,8 @@ struct FilaPokemon: View {
         }
             .hidden()
     )
-            }       }
+    }
+}
 
 
 
